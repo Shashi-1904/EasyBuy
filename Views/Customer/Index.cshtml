@@ -1,0 +1,376 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ============== Header Categories + Banner Section ============== -->
+<section class="header_section py-4">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- ===== Left Categories ===== -->
+            <div class="col-md-2 col-12 mb-3">
+                <div class="shadow p-3 bg-white">
+                    <h6 class="text-uppercase font-weight-bold mb-3">
+                        <i class="fas fa-bars"></i> Browse Categories
+                    </h6>
+                    <ul class="list-unstyled category-list">
+                        @Html.Partial("FetchCategoryList",ViewData["category"])
+                        @* <li>PlayStation</li>
+                        <li>XBOX</li>
+                        <li>Nintendo</li>
+                        <li>PC Gaming</li>
+                        <li>Phones & Tablets</li>
+                        <li>Pre-owned</li>
+                        <li>Deals</li>
+                        <li>Coming Soon</li>
+                        <li>Accessories</li> *@
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ===== Center Banner ===== -->
+            <div class="col-md-7 col-12 mb-3">
+                <div class="position-relative shadow">
+                    <img src="~/assets/images/banner1.jpg" class="img-fluid w-100" alt="Main Banner">
+
+                    <div class="banner-text position-absolute">
+                        <h2 class="text-white font-weight-bold">SPACECITY 2</h2>
+                        <a href="#" class="btn btn-warning mt-2">PRE-ORDER NOW</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Right Side Offers ===== -->
+            <div class="col-md-3 col-12">
+                <div class="mb-3 shadow position-relative">
+                    <img src="~/assets/images/offer1.jpg" class="img-fluid w-100" alt="Offer 1">
+                    <a href="#" class="btn btn-warning offer-btn">BUY NOW</a>
+                </div>
+
+                <div class="shadow position-relative">
+                    <img src="~/assets/images/offer2.jpg" class="img-fluid w-100" alt="Offer 2">
+                    <a href="#" class="btn btn-warning offer-btn">BUY NOW</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
+                <button type="button" onclick="close1()"
+                        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="return validation()" name="signup-googlesheet" method="post">
+                    <div class="mb-3">
+                        <label for="exampleInputName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="exampleInputName">
+                        <span id="errorname" style="font-size: 10px; color: red;"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1">
+                        <span id="erroremail" style="font-size: 10px; color: red;"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputNumber" class="form-label">Contact Number</label>
+                        <input type="number" class="form-control" id="exampleInputNumber">
+                        <span id="errornumber" style="font-size: 10px; color: red;"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                        <span id="errorpassword" style="font-size: 10px; color: red;"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword2" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword2">
+                        <span id="errorcpassword" style="font-size: 10px; color: red;"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="return validation1()" method="post">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail2" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail2">
+                        <span id="erroremail1" style="font-size: 10px; color: red;"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword3" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword3">
+                        <span id="errorpassword1" style="font-size: 10px; color: red;"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- ==============shop by category starts here============== -->
+<section class="shop_by_category py-5 my-5" id="shop_by_category">
+    <div class="container-fluid">
+        <div class="section_title text-center mb-5">
+            <h1 class="text-capitalize">Shop By category</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="card bg-dark text-white">
+                    <a href="category.html">
+                        <img class="card-img img img-fluid" src="~/assets/images/category1.jfif" alt="Card image">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4 col-12 mt-small-5 mb-small-5">
+                <div class="card bg-dark text-white">
+                    <a href="category.html">
+                        <img class="card-img img img-fluid" src="~/assets/images/category2.jfif" alt="Card image">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="card bg-dark text-white">
+                    <a href="category.html">
+                        <img class="card-img img img-fluid" src="~/assets/images/category3.jfif" alt="Card image">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==============shop by category ends here============== -->
+<!-- ==============products starts here============== -->
+<section class="products py-5 my-5 bg-light" id="products">
+    <div class="container ">
+        <div class="section_title text-center mb-5">
+            <h1 class="text-capitalize">Latest Products</h1>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-4 col-12">
+                <div class="single_product shadow text-center p-1">
+                    <div class="product_img">
+                        <a href="product_detail.html"><img src="~/assets/images/product1.png" class="img img-fluid" alt=""></a>
+                        <div class="new_product">
+                            <span class="badge py-2 px-3 badge-pill badge-danger">New</span>
+                        </div>
+                    </div>
+                    <div class="product-caption my-3">
+                        <div class="product-ratting">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star low-star"></i>
+                            <i class="far fa-star low-star"></i>
+                        </div>
+                        <h4><a href="product_detail.html">Green Dress with details</a></h4>
+                        <div class="price">
+                            <b><span class="mr-1">₹</span><span>400</span></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="single_product shadow text-center p-1 mt-small-5 mb-small-5">
+                    <div class="product_img">
+                        <a href="product_detail.html"><img src="~/assets/images/product2.png" class="img img-fluid" alt=""></a>
+                        <div class="new_product">
+                            <span class="badge py-2 px-3 badge-pill badge-danger">New</span>
+                        </div>
+                    </div>
+                    <div class="product-caption my-3">
+                        <div class="product-ratting">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star low-star"></i>
+                            <i class="far fa-star low-star"></i>
+                        </div>
+                        <h4><a href="product_detail.html">Green Dress with details</a></h4>
+                        <div class="price">
+                            <b><span class="mr-1">₹</span><span>400</span></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="single_product shadow text-center p-1">
+                    <div class="product_img">
+                        <a href="product_detail.html"><img src="~/assets/images/product3.png" class="img img-fluid" alt=""></a>
+                        <div class="new_product">
+                            <span class="badge py-2 px-3 badge-pill badge-danger">New</span>
+                        </div>
+                    </div>
+                    <div class="product-caption my-3">
+                        <div class="product-ratting">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star low-star"></i>
+                            <i class="far fa-star low-star"></i>
+                        </div>
+                        <h4><a href="product_detail.html">Green Dress with details</a></h4>
+                        <div class="price">
+                            <b><span class="mr-1">₹</span><span>400</span></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="single_product shadow text-center p-1">
+                    <div class="product_img">
+                        <a href="product_detail.html"><img src="~/assets/images/product3.png" class="img img-fluid" alt=""></a>
+                        <div class="new_product">
+                            <span class="badge py-2 px-3 badge-pill badge-danger">New</span>
+                        </div>
+                    </div>
+                    <div class="product-caption my-3">
+                        <div class="product-ratting">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star low-star"></i>
+                            <i class="far fa-star low-star"></i>
+                        </div>
+                        <h4><a href="product_detail.html">Green Dress with details</a></h4>
+                        <div class="price">
+                            <b><span class="mr-1">₹</span><span>400</span></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="single_product shadow text-center p-1 mt-small-5 mb-small-5">
+                    <div class="product_img">
+                        <a href="product_detail.html"><img src="~/assets/images/product2.png" class="img img-fluid" alt=""></a>
+                        <div class="new_product">
+                            <span class="badge py-2 px-3 badge-pill badge-danger">New</span>
+                        </div>
+                    </div>
+                    <div class="product-caption my-3">
+                        <div class="product-ratting">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star low-star"></i>
+                            <i class="far fa-star low-star"></i>
+                        </div>
+                        <h4><a href="product_detail.html">Green Dress with details</a></h4>
+                        <div class="price">
+                            <b><span class="mr-1">₹</span><span>400</span></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="single_product shadow text-center p-1">
+                    <div class="product_img">
+                        <a href="product_detail.html"><img src="~/assets/images/product1.png" class="img img-fluid" alt=""></a>
+                        <div class="new_product">
+                            <span class="badge py-2 px-3 badge-pill badge-danger">New</span>
+                        </div>
+                    </div>
+                    <div class="product-caption my-3">
+                        <div class="product-ratting">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star low-star"></i>
+                            <i class="far fa-star low-star"></i>
+                        </div>
+                        <h4><a href="product_detail.html">Green Dress with details</a></h4>
+                        <div class="price">
+                            <b><span class="mr-1">₹</span><span>400</span></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============products ends here============== -->
+<!-- ==============feature starts here============== -->
+<section class="feature py-5 mt-5" id="feature">
+    <div class="container">
+        <div class="section_title text-center mb-5">
+            <h1 class="text-capitalize">Our Features</h1>
+        </div>
+        <div class="row text-white">
+            <div class="col-md-4 col-12 shadow p-3">
+                <div class="text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-shipping-fast fa-3x mb-3 pt-2"></i>
+                        <div>
+                            <h3>Free Shipping Method</h3>
+                        </div>
+                    </div>
+                    <div>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos impedit id accusamus quas maxime
+                        expedita nostrum atque delectus deleniti ad modi repellat debitis ipsam quisquam amet, odit voluptate
+                        recusandae distinctio? Perferendis tenetur quibusdam porro dolor dignissimos id magnam debitis vitae?
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12 shadow p-3 mt-small-5 mb-small-5">
+                <div class="text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-lock fa-3x mb-3 pt-2"></i>
+                        <div>
+                            <h3>Secure Payment System</h3>
+                        </div>
+                    </div>
+                    <div>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos impedit id accusamus quas maxime
+                        expedita nostrum atque delectus deleniti ad modi repellat debitis ipsam quisquam amet, odit voluptate
+                        recusandae distinctio? Perferendis tenetur quibusdam porro dolor dignissimos id magnam debitis vitae?
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12 shadow p-3">
+                <div class="text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-headphones fa-3x mb-3 pt-2"></i>
+                        <div>
+                            <h3>24/7 Support</h3>
+                        </div>
+                    </div>
+                    <div>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos impedit id accusamus quas maxime
+                        expedita nostrum atque delectus deleniti ad modi repellat debitis ipsam quisquam amet, odit voluptate
+                        recusandae distinctio? Perferendis tenetur quibusdam porro dolor dignissimos id magnam debitis vitae?
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==============services ends here============== -->
