@@ -4,6 +4,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (TempData["SuccessMsg"] != null)
+{
+    <div id="successAlert"
+         class="alert alert-success mt-3"
+         role="alert">
+        @TempData["SuccessMsg"]
+    </div>
+
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById('successAlert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }, 5000); // 10 seconds
+    </script>
+}
+
+
+
 <!-- ============== Header Categories + Banner Section ============== -->
 <section class="header_section py-4">
     <div class="container-fluid">
