@@ -25,7 +25,7 @@
     <section class="header_menu" id="header_menu">
         <div class="container-fluid px-0 shadow">
             <nav class="navbar navbar-expand-lg navbar-light bg-light py-3  ">
-                <a class="navbar-brand pl-5 pl-small-0" href="index.html">
+                <a class="navbar-brand pl-5 pl-small-0" href="@Url.Action("Index", "Customer")">
                     <img src="~/assets/images/logo.png" class="img img-fluid" width="120px" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -36,7 +36,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="@Url.Action("Index", "Customer")">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="product.html">Product</a>
@@ -48,7 +48,7 @@
                             <a class="nav-link" href="about.html">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact Us</a>
+                            <a class="nav-link" href="@Url.Action("Feedback", "Customer")">Contact Us</a>
                         </li>
                         <!-- <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

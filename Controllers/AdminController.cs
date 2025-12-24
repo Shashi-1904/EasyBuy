@@ -212,5 +212,20 @@ namespace EasyBuy.Controllers
             _context.SaveChanges();
             return RedirectToAction("FetchProduct");
         }
+        public IActionResult fetchFeedback()
+        {    
+            return View(_context.tbl_feedback.ToList());
+        }
+        public IActionResult DeletePermissionFeedback(int id)
+        {
+            return View(_context.tbl_feedback.FirstOrDefault(f => f.feedback_id == id));
+        }
+        public IActionResult DeleteFeedback(int id)
+        {
+            var feed = _context.tbl_feedback.Find(id);
+            _context.tbl_feedback.Remove(feed);
+            _context.SaveChanges();
+            return RedirectToAction("fetchFeedback"); return View();
+        }
     }
 }

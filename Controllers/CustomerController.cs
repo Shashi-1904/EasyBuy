@@ -78,5 +78,28 @@ namespace EasyBuy.Controllers
             return RedirectToAction("CustomerProfile");
         }
 
+        public IActionResult ChangeProfileImage(Customer cust,IFormFile constomer_image)
+        {
+            string ImagePath = Path.Combine(_env.WebRootPath, "customer_images", constomer_image.FileName);
+            FileStream fs = new FileStream(ImagePath, FileMode.Create);
+            constomer_image.CopyTo(fs);
+            cust.constomer_image = constomer_image.FileName;
+            _context.tbl_customer.Update(cust);
+            _context.SaveChanges();
+            return RedirectToAction("CustomerProfile");
+        }
+        public IActionResult Feedback()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Feedback(Feedback feed)
+        {
+            TempData["feedmsg"] = "Thank you for your feedback!!";
+            _context.tbl_feedback.Add(feed);
+            _context.SaveChanges();
+            return RedirectToAction("Feedback");
+        }
+
     }
 }
