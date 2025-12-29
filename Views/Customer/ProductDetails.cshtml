@@ -1,0 +1,98 @@
+﻿@model List<Product>
+
+@{
+    ViewData["Title"] = "Product Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="product_detail py-5 my-5">
+    <div class="container">
+
+        <div class="section_title text-center mb-5">
+            <h1 class="text-capitalize">Product Detail</h1>
+        </div>
+
+        @foreach (var pro in Model)
+        {
+            <div class="row align-items-center mb-5">
+
+                <!-- ===== LEFT : PRODUCT IMAGE ===== -->
+                <div class="col-md-6 mb-4">
+                    <div class="shadow rounded p-3 bg-white text-center">
+                        <img src="@("~/product_images/" + pro.product_image)"
+                             asp-append-version="true"
+                             class="img-fluid rounded"
+                             style="max-height:400px; object-fit:contain;"
+                             alt="@pro.product_name" />
+                    </div>
+                </div>
+
+                <!-- ===== RIGHT : PRODUCT DETAILS ===== -->
+                <div class="col-md-6">
+
+                    <div class="title mb-3">
+                        <h3>@pro.product_name</h3>
+                    </div>
+
+                    <div class="category mb-3">
+                        <span class="bg-light p-2">
+                            @pro.Category?.category_name
+                        </span>
+                    </div>
+
+                    <div class="rating d-flex text-warning mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+
+                    <div class="price mb-3">
+                        <h4>
+                            <span class="mr-1">₹</span>@pro.product_price
+                        </h4>
+                    </div>
+
+                    <div class="desc mb-4">
+                        <p>@pro.product_description</p>
+                    </div>
+
+                    <div class="qty_section border-top pt-3 mb-4">
+                        <label class="d-block mb-2">Quantity</label>
+
+                        <div class="d-flex align-items-center">
+                            <button type="button"
+                                    class="btn btn-outline-secondary qty-btn"
+                                    onclick="decreaseQty(this)">
+                                −
+                            </button>
+
+                            <input type="number"
+                                   class="form-control text-center mx-2 quantity-input"
+                                   value="1"
+                                   min="1"
+                                   max="10"
+                                   readonly
+                                   style="width:70px;" />
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary qty-btn"
+                                    onclick="increaseQty(this)">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                    <div class="buy">
+                        <form method="post" asp-action="AddToCart">
+                        <input type="hidden" name="product_id" value="@pro.product_id" />
+                        <input type="submit" value="Add To Cart" class="btn btn-success shadow" />
+                    </form>                   
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
+</section>

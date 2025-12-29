@@ -47,9 +47,15 @@
 }
 
 /* for product layout design */
-.single_product{
+.single_product {
     background-color: rgb(241, 240, 240);
+    transition: all 0.3s ease-in-out;
 }
+    .single_product:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
 .product_img{
     position: relative;
 }
@@ -58,7 +64,22 @@
     top: 5%;
     left: 5%;
 }
+    .product_img img {
+        transition: transform 0.4s ease;
+    }
 
+.single_product:hover .product_img img {
+    transform: scale(1.1);
+}
+.product-caption h4 a {
+    color: #000;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.single_product:hover .product-caption h4 a {
+    color: #ffc107;
+}
 .contact_form{
     background-color: #8EC5FC;
     background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);

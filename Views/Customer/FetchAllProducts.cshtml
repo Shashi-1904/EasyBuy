@@ -1,0 +1,52 @@
+﻿@using EasyBuy.Models.ViewModels
+
+@{
+    ViewData["Title"] = "FetchAllProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ProductCategoryVM
+@if (TempData["CartMsg"] != null)
+{
+    <div id="successAlert"
+         class="alert alert-success mt-3"
+         role="alert">
+        @TempData["CartMsg"]
+    </div>
+
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById('successAlert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }, 5000); 
+    </script>
+}
+<section class="py-4">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- ===== Left Categories ===== -->
+            <div class="col-md-2 col-12 mb-3">
+                <div class="shadow p-3 bg-white">
+                    <h6 class="text-uppercase font-weight-bold mb-3">
+                        <i class="fas fa-bars"></i> Browse Categories
+                    </h6>
+
+                    <ul class="list-unstyled category-list">
+                        @Html.Partial("FetchCategoryList", Model.Categories)
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ===== Right Products ===== -->
+            <div class="col-md-10 col-12">
+                <div class="row">
+                    @Html.Partial("FetchProducts", Model.Products)
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

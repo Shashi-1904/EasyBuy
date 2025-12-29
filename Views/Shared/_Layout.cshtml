@@ -39,7 +39,7 @@
                             <a class="nav-link" href="@Url.Action("Index", "Customer")">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="product.html">Product</a>
+                            <a class="nav-link" href="@Url.Action("FetchAllProducts", "Customer")">Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="category.html">Category</a>
@@ -224,6 +224,7 @@
           .catch(error =>console.error('Error!',error.message))
         })
     </script>
-    
+    <script src="~/assets/js/site.js" asp-append-version="true"></script>
+
 </body>
 </html>

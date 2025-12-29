@@ -1,5 +1,7 @@
 ﻿using EasyBuy.Models;
+using EasyBuy.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyBuy.Controllers
 {
@@ -15,7 +17,11 @@ namespace EasyBuy.Controllers
         public IActionResult Index()
         {
             List<Category> category = _context.tbl_category.ToList();
-            ViewData["category"]=category;
+            ViewData["category"] = category;
+
+            List<Product> pro = _context.tbl_product.ToList();
+            ViewData["Product"] = pro;
+
             ViewBag.CheckSession = HttpContext.Session.GetString("customerSession");
             return View();
         }
@@ -26,10 +32,10 @@ namespace EasyBuy.Controllers
         [HttpPost]
         public IActionResult CustomerLogin(string CustomerEmail, string CustomerPass)
         {
-            var cust = _context.tbl_customer.FirstOrDefault(c=> c.constomer_email==CustomerEmail);
-            if (cust!=null && cust.constomer_password==CustomerPass)
+            var cust = _context.tbl_customer.FirstOrDefault(c => c.constomer_email == CustomerEmail);
+            if (cust != null && cust.constomer_password == CustomerPass)
             {
-                HttpContext.Session.SetString("customerSession",cust.constomer_id.ToString());
+                HttpContext.Session.SetString("customerSession", cust.constomer_id.ToString());
                 TempData["SuccessMsg"] = $"Login successful! Welcome {cust.constomer_name}";
                 return RedirectToAction("Index");
             }
@@ -37,7 +43,7 @@ namespace EasyBuy.Controllers
             {
                 ViewBag.msg = "Incorrect Email or Password!!";
                 return View();
-            }   
+            }
         }
         public IActionResult CustomerRegister()
         {
@@ -57,7 +63,7 @@ namespace EasyBuy.Controllers
         }
         public IActionResult CustomerProfile()
         {
-            if(string.IsNullOrEmpty(HttpContext.Session.GetString("customerSession")))
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("customerSession")))
             {
                 return RedirectToAction("CustomerLogin");
             }
@@ -67,7 +73,7 @@ namespace EasyBuy.Controllers
                 var row = _context.tbl_customer.Where(c => c.constomer_id == int.Parse(customerId)).ToList();
                 return View(row);
             }
-               
+
         }
         [HttpPost]
         public IActionResult UpdateProfile(Customer cust)
@@ -78,7 +84,7 @@ namespace EasyBuy.Controllers
             return RedirectToAction("CustomerProfile");
         }
 
-        public IActionResult ChangeProfileImage(Customer cust,IFormFile constomer_image)
+        public IActionResult ChangeProfileImage(Customer cust, IFormFile constomer_image)
         {
             string ImagePath = Path.Combine(_env.WebRootPath, "customer_images", constomer_image.FileName);
             FileStream fs = new FileStream(ImagePath, FileMode.Create);
@@ -100,6 +106,45 @@ namespace EasyBuy.Controllers
             _context.SaveChanges();
             return RedirectToAction("Feedback");
         }
+        public IActionResult FetchAllProducts()
+        {
+            ProductCategoryVM vm = new ProductCategoryVM()
+            {
+                Categories = _context.tbl_category.ToList(),
+                Products = _context.tbl_product.ToList()
+            };
 
+            return View(vm);
+
+        }
+        public IActionResult ProductDetails(int id)
+        {
+            var product = _context.tbl_product
+                .Include(p => p.Category)
+                .Where(p => p.product_id == id)
+                .ToList();
+
+            return View(product);
+        }
+        public IActionResult AddToCart(int product_id, Cart cart)
+        {
+            string isLogin=HttpContext.Session.GetString("customerSession");
+            if(isLogin!=null)
+            {
+                cart.prod_id = product_id;
+                cart.cust_id = int.Parse(isLogin);
+                cart.product_quantity = 1;
+                cart.cart_status = 0;
+                _context.tbl_cart.Add(cart);
+                _context.SaveChanges();
+                TempData["CartMsg"] = "Product Succesfully Added in Cart";
+                return RedirectToAction("FetchAllProducts");
+            }
+            else
+            {
+                return RedirectToAction("CustomerLogin");             
+            }
+               
+        }
     }
 }
